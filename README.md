@@ -1,6 +1,6 @@
 # KAYAK-website-
 
-This repository showcases a responsive web design for a Britannica-themed website. Leveraging the power of CSS Flexbox and Grid, the layout adapts seamlessly to different screen sizes and devices. Media queries are strategically implemented to ensure an optimal user experience across various platforms.
+This repository showcases a responsive web design for a KAYAk-themed website. Leveraging the power of CSS Flexbox and Grid, the layout adapts seamlessly to different screen sizes and devices. Media queries are strategically implemented to ensure an optimal user experience across various platforms.
 
 Key Features:
 
