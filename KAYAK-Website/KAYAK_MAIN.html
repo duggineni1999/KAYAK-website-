@@ -1,0 +1,3568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="Kayak-Emblem.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KAYAK</title>
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    
+    .image {
+      background-image: url(c8ced6f1-city-16623-162d00ab100.jpg);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+    :root {
+      --color-default: #004f83;
+      --color-second: #0067ac;
+      --color-white: #fff;
+      --color-body: #e4e9f7;
+      --color-light: #e0e0e0;
+    }
+
+
+    * {
+      padding: 0%;
+      margin: 0%;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+   
+
+    .sidebar {
+      min-height: 100%;
+      width: 78px;
+      padding: 6px 14px;
+      z-index: 99;
+      background-color: rgb(221, 220, 220);
+      transition: all .5s ease;
+      top: 0;
+      left: 0;
+    }
+
+    .sidebar.open {
+      width: 250px;
+    }
+
+    .sidebar .logo_details {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .sidebar .logo_details .icon {
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+
+
+    .sidebar .logo_details .logo_name {
+      color: black;
+      font-size: 22px;
+      font-weight: 600;
+      opacity: 0;
+      transition: all .5s ease;
+    }
+
+
+
+    .sidebar .logo_details .btn1 {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      font-size: 23px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .5s ease;
+    }
+
+    .sidebar.open .logo_details .btn1 {
+      left: 0;
+      right: 0;
+      margin: 0%;
+      text-align: left;
+    }
+
+    .sidebar i {
+      color: black;
+      height: 60px;
+      line-height: 60px;
+      min-width: 50px;
+      font-size: 25px;
+      text-align: center;
+    }
+
+    .sidebar .nav-list {
+      margin-top: 20px;
+      height: 100%;
+    }
+
+    .sidebar li {
+      position: relative;
+      margin: 8px 0;
+      list-style: none;
+      border-radius: 10px;
+    }
+
+    .sidebar li .tooltip {
+      position: absolute;
+      top: -20px;
+      left: calc(100% + 15px);
+      z-index: 3;
+      background-color: var(--color-white);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      padding: 6px 14px;
+      font-size: 15px;
+      font-weight: 400;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sidebar li:hover .tooltip {
+      opacity: 1;
+      pointer-events: auto;
+      transition: all 0.4s ease;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .sidebar.open li .tooltip {
+      display: none;
+    }
+
+    .sidebar input {
+      font-size: 15px;
+      color: var(--color-white);
+      font-weight: 400;
+      outline: none;
+      height: 35px;
+      width: 35px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--color-second);
+      transition: all .5s ease;
+    }
+
+    .sidebar input::placeholder {
+      color: var(--color-light)
+    }
+
+    .sidebar.open input {
+      width: 100%;
+      padding: 0 20px 0 50px;
+    }
+
+    .sidebar .bx-search {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      font-size: 22px;
+      background-color: var(--color-second);
+      color: var(--color-white);
+    }
+
+    .sidebar li a {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      text-decoration: none;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background-color: rgb(255, 252, 252);
+      position: relative;
+      transition: all .5s ease;
+      z-index: 12;
+      border-radius: 10px;
+    }
+
+    .sidebar li a::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(0);
+      background-color: rgb(192, 191, 191);
+      border-radius: 10px;
+
+      transform-origin: left;
+      z-index: -2;
+    }
+
+    .sidebar li a:hover::after {
+      transform: scaleX(1);
+      color: white;
+    }
+
+    .sidebar li a .link_name {
+      color: black;
+      font-size: 15px;
+      font-weight: 400;
+      white-space: nowrap;
+      pointer-events: auto;
+      transition: all 0.4s ease;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .sidebar li a:hover .link_name,
+    .sidebar li a:hover i {
+      transition: all 0.5s ease;
+      color: rgb(0, 0, 0);
+    }
+
+    .sidebar.open li a .link_name {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar li i {
+      height: 35px;
+      line-height: 35px;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+
+    .sidebar li.profile {
+      position: fixed;
+      height: 60px;
+      width: 78px;
+      left: 0;
+      bottom: -8px;
+      padding: 10px 14px;
+      overflow: hidden;
+      transition: all .5s ease;
+    }
+
+    .image {
+      background-image: url(c8ced6f1-city-16623-162d00ab100.jpg);
+    }
+
+    .offcanvas-body ul li {
+      border-radius: 8px;
+    }
+
+    .offcanvas-body ul li:hover {
+      background-color: #0e0c0c;
+    }
+
+    @media (min-width: 0px) and (max-width:992px) {
+      .sidebar {
+        display: none;
+      }
+    }
+    .slider{
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-auto-flow: column;
+      border-radius: 15px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+    .slider1{
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-auto-flow: column;
+      border-radius: 15px;
+      overflow-x: auto;
+      
+    }
+
+    .slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider.drag {
+      /* scroll-snap-type: none; */
+      scroll-behavior: auto;
+    }
+
+    .slider.drag .profile-card {
+      cursor: grab;
+      user-select: none;
+    }
+
+    .slider1::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slider1.drag1 {
+      /* scroll-snap-type: none; */
+      scroll-behavior: auto;
+    }
+
+    .slider1.drag1 .profile-card1 {
+      cursor: grab;
+      user-select: none;
+    }
+    .profile-card1 {
+      user-select: none;
+    }
+    .kayak{
+      position: relative;
+      top:0;
+      left: 78px;;
+      width: calc(100% - 78px);
+    }
+    .menu-button{
+      display: none;
+    }
+    @media (min-width: 200px) and (max-width:992px) {
+      .kayak {
+          left: 0%;
+          width: 100%;
+          position:initial;
+      }
+      .menu-button{
+        display: block;
+      }
+    }
+    
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+
+   <!-- side bar  -->
+  <div class="sidebar bg-white border-1 border-end fixed-top">
+    <div class="logo_details">
+      <div class="d-flex justify-content-center">
+        <i class="bx bx-menu btn1"></i>
+      </div>
+
+    </div>
+    <ul class="nav-list m-0 p-0 border-1 border-bottom border-black">
+      <li>
+        <i class="bx bx-search "></i>
+        <input type="text" placeholder="Search...">
+
+      </li>
+      <li>
+        <a href="#">
+          <!-- <button type="button" class="btn btn-primary bg-transparent text-black border-1 border-black mx-3 my-3 px-1 py-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <div class="d-flex flex-row">
+              <ion-icon class="fs-4  mx-1 d-inline-flex" name="person-circle-outline"></ion-icon>
+              <h5 class="h6 signup  d-none d-sm-none d-md-block ">Sign In</h5>
+            </div>
+          </button> -->
+          <i type="button" class="bx bx-user-circle  " data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>
+          <span class="link_name">Sign In</span>
+        </a>
+
+      </li>
+    </ul>
+    <ul class="nav-list m-0 p-0 border-1 border-bottom border-black">
+      <li>
+        <a href="#">
+          <i class="bx bx-hotel " ></i>
+          <span class="link_name">Hotels</span>
+        </a>
+
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bxs-plane " ></i>
+          <span class="link_name">Flights</span>
+        </a>
+
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-car " ></i>
+          <span class="link_name">Car Rental</span>
+        </a>
+
+      </li>
+    </ul>
+    <ul class="nav-list m-0 p-0 border-1 border-bottom border-black">
+      <li>
+        <a href="#">
+          <i class="bx bx-sticker "></i>
+          <span class="link_name">Travel Guide</span>
+        </a>
+
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-time-five " ></i>
+          <span class="link_name">Best Time To Travel</span>
+        </a>
+
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-globe " ></i>
+          <span class="link_name">Explore</span>
+        </a>
+
+      </li>
+    </ul>
+    <ul class="nav-list m-0 p-0 border-1 border-bottom border-black">
+      <li>
+        <a href="#">
+          <i class="bx bx-notepad "></i>
+          <span class="link_name">Feedback</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bx bx-heart "></i>
+          <span class="link_name">Trips</span>
+        </a>
+      </li>
+    </ul>
+
+    <li>
+      <a href="#">
+        <i class="bx bxs-business "></i>
+        <span class="link_name">KAYAK for Business</span>
+      </a>
+    </li>
+
+  </div>
+  <!-- total body -->
+<div class="kayak">
+  <!-- header -->
+  <header class=" sticky-top z-1 w-100">
+    <div class=" container-fluid overflow-hidden border-bottom m-0 p-0">
+      <div class="row">
+        <div class=" col-9 bg-white">
+          <div class="d-flex flex-row ">
+            <button class="btn btn-primary bg-transparent d-lg-none border-0 text-black fs-3 ms-3 my-3" type="button"
+              data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+              aria-controls="offcanvasScrolling"><iconify-icon icon="bx:menu"></iconify-icon></button>
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+              id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+              <div class="offcanvas-header  d-flex flex-row justify-content-end">
+
+                <button type="button " class="btn fs-4" data-bs-dismiss="offcanvas" aria-label="Close"><i
+                    class="bx bx-menu" id="btn"></i></button>
+              </div>
+              <div class="offcanvas-body  bg-light">
+                <ul class=" border-1 border-bottom border-warning-subtle list-unstyled">
+                  <li class="p-2 mb-3 ">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-user-circle fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Sign In</span>
+                    </a>
+
+                  </li>
+                </ul>
+                <ul class=" m-0 p-0 border-1 border-bottom border-warning-subtle list-unstyled mb-2">
+                  <li class="p-2 mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-hotel fs-4 m-1 "></i>
+                      <span class="link_name fs-5 mx-4 m-0">Hotels</span>
+                    </a>
+
+                  </li>
+                  <li class="p-2  mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bxs-plane fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Flights</span>
+                    </a>
+
+                  </li>
+                  <li class="p-2  mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-car fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Car Rental</span>
+                    </a>
+
+                  </li>
+                </ul>
+                <ul class="  border-1 border-bottom border-warning-subtle list-unstyled">
+                  <li class=" p-2  mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-sticker fs-4 m-1 "></i>
+                      <span class="link_name  fs-5 mx-4 m-0">Travel Guide</span>
+                    </a>
+
+                  </li>
+                  <li class=" p-2  mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-time-five fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Best Time To Travel</span>
+                    </a>
+
+                  </li>
+                  <li class=" p-2 mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-globe fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Explore</span>
+                    </a>
+
+                  </li>
+                </ul>
+                <ul class=" border-1 border-bottom border-warning-subtle list-unstyled">
+                  <li class=" p-2 mb-3">
+                    <a href="#" class="text-decoration-none mx-1 text-black">
+                      <i class="bx bx-notepad fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Feedback</span>
+                    </a>
+                  </li>
+                  <li class=" p-2  mb-3">
+                    <a href="#" class="text-decoration-none  mx-1 text-black">
+                      <i class="bx bx-heart fs-4 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0">Trips</span>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="  list-unstyled">
+                  <li class=" p-2  mb-3">
+                    <a href="#" class="text-decoration-none  mx-1 text-black">
+                      <i class="bx bxs-business fs-5 m-1"></i>
+                      <span class="link_name fs-5 mx-4 m-0 ">KAYAK for Business</span>
+                    </a>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+            <div class="my-4 mx-3 d-none d-sm-none d-md-none d-lg-block">
+              <div class="card d-flex flex-row justify-content-between border-0 bg-transparent" style="width: 160px;">
+                <h1
+                  style="background-color: rgb(255, 105, 15); color: white;  width:30px;height: 25px; font-size: 20px;font-weight: 600; text-align: center;">
+                  K</h1>
+                <h1
+                  style="background-color: rgb(255, 105, 15); color: white; width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+                  A</h1>
+                <h1
+                  style="background-color: rgb(255, 105, 15); color: white;   width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+                  Y</h1>
+                <h1
+                  style="background-color: rgb(255, 105, 15); color: white;  width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+                  A</h1>
+                <h1
+                  style="background-color: rgb(255, 105, 15); color: white; width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+                  K</h1>
+              </div>
+            </div>
+            <div class=" my-3 d-lg-none ">
+              <div class="card d-flex flex-row  border-0 bg-transparent">
+                <h1
+                  style="background-color: rgb(185, 88, 32); color: white; border-radius: 5px; width:30px;height: 40px; font-size: 30px; text-align: center;">
+                  K</h1>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-3 bg-white p-0">
+          <div class="d-flex justify-content-lg-end ">
+            <!-- <button
+              class="btn btn-primary bg-transparent text-black border-1 border-black mx-3 my-3 px-1 py-2 ">
+              <div class="d-flex flex-row">
+                <ion-icon class="fs-4  mx-1 d-inline-flex" name="person-circle-outline"></ion-icon>
+                <h5 class="h6 signup  d-none d-sm-none d-md-block ">Sign In</h5>
+              </div>
+            </button> -->
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary bg-transparent text-black border-1 border-black mx-3 my-3 px-1 py-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <div class="d-flex flex-row">
+                <ion-icon class="fs-4  mx-1 d-inline-flex" name="person-circle-outline"></ion-icon>
+                <h5 class="h6 signup  d-none d-sm-none d-md-block ">Sign In</h5>
+              </div>
+            </button>
+            <!-- Modal -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+  <!-- modal -->
+  <div class="modal fade mt-lg-5" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <div class="card d-flex flex-row justify-content-between border-0 bg-transparent" style="width: 160px;">
+            <h1 class=""
+              style="background-color: rgb(255, 105, 15); color: white;  width:30px;height: 25px; font-size: 20px;font-weight: 600; text-align: center; ">
+              K</h1>
+            <h1
+              style="background-color: rgb(255, 105, 15); color: white; width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+              A</h1>
+            <h1
+              style="background-color: rgb(255, 105, 15); color: white;  width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+              Y</h1>
+            <h1
+              style="background-color: rgb(255, 105, 15); color: white; width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+              A</h1>
+            <h1
+              style="background-color: rgb(255, 105, 15); color: white; width:30px;height: 25px; font-size: 20px; font-weight: 600;  text-align: center;">
+              K</h1>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container ">
+            <div class="w-100">
+              <img class="w-100" src="magiclinkloginBg.svg" alt="">
+            </div>
+
+            <h3 class="fs-5 mt-4 fw-bold"> Sign In Or Create a Account</h3>
+            <p class="fw-lighter m-0 me-1" style="font-size: 15px;" >Track prices, organise travel plans and access member-only deals with your KAYAK account</p>
+            <button class=" btn border-1 border-black my-3 text-center w-100 ">Continue With Email</button>
+
+            <hr class="bg-black w-100">
+
+            <div class="d-flex flex-row gap-2 ">
+              <button class="btn btn-light bg-white w-100 border-1 border-light-subtle h-50 ">
+                <div class="d-flex flex-row justify-content-center">
+                  <ion-icon class="fs-5 mx-2 my-2" name="logo-google"></ion-icon>
+                  <h5 class="fs-6 my-2">Google</h5>
+                </div>
+                
+              </button>
+              <button class="btn btn-light bg-white w-100 border-1 border-light-subtle h-50">
+                <div class="d-flex flex-row justify-content-center ">
+                  <ion-icon  class="fs-5 mx-2 my-2" name="logo-apple"></ion-icon>
+                  <h5 class="fs-6 my-2">Apple</h5>
+                </div>
+              </button>
+            </div>
+            <p class="my-3" style="font-size: 15px;">By signing up you accept our <span><a class="text-black mx-1" href="">terms of use </a></span> and <span><a class="text-black mx-1" href="">privacy policy</a></span> .</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- booking -->
+  <div class="image">
+    <div class="container  overflow-hidden ">
+      <div class="row">
+        <div class="card hotel mb-5 ms-lg-5  p-1 p-sm-3 p-md-5 p-lg-5  mt-5 col-12 col-sm-12 col-md-12 col-lg-7 me-lg-5">
+          <div class="mx-3">
+            <h1 class=" pt-4 fst-normal fw-bold">Zurich hotels</h1>
+            <small class=" fw-bold "> 1 Room ,2 Guests</small>
+            <div class="card  bg-transparent border-0   my-3">
+              <div class="input-group ">
+                <span class="input-group-text bg-white bg-dark-subtle border-end-0" id="basic-addon1"><ion-icon
+                    class="fs-3" name="bed"></ion-icon></span>
+                <input type="text" class="form-control bg-dark-subtle border-start-0 "
+                  placeholder="Enter a City, Hotel, Airport or Landmark" aria-label="Username"
+                  aria-describedby="basic-addon1">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ">
+                <div class="input-group w-100 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ">
+                  <span class="input-group-text bg-white bg-dark-subtle border-end-0" id="basic-addon1"><ion-icon
+                      class="fs-3" name="calendar"></ion-icon></span>
+                  <input type="date" class="form-control bg-dark-subtle border-start-0 "
+                    placeholder="Enter a City, Hotel, Airport or Landmark" aria-label="Username"
+                    aria-describedby="basic-addon1">
+                </div>
+              </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ">
+                <div class="input-group w-100 col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 ">
+                  <span class="input-group-text bg-white bg-dark-subtle border-end-0" id="basic-addon1"><ion-icon
+                      class="fs-3" name="calendar"></ion-icon></span>
+                  <input type="date" class="form-control bg-dark-subtle border-start-0 "
+                    placeholder="Enter a City, Hotel, Airport or Landmark" aria-label="Username"
+                    aria-describedby="basic-addon1">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-warning col-12 text-white " style="background-color: rgba(238,68,24,255); height: 50px;">Submit</button>
+            </div>
+
+          </div>
+          <div class="d-flex flex-row justify-content-center mt-3 col-12 ">
+            <div class="card border-0 col-3 d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="AGODA.png" alt="">
+            </div>
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="BOOKINGDOTCOM.png" alt="">
+            </div>
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="HOTELSDOTCOM.png" alt="">
+            </div>
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="HILTON.png" alt="">
+            </div>
+          </div>
+          <div class="d-flex flex-row flex-nowrap justify-content-center mt-3 col-12 mb-4 ">
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="AGODA.png" alt="">
+            </div>
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="BOOKINGDOTCOM.png" alt="">
+            </div>
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="HOTELSDOTCOM.png" alt="">
+            </div>
+            <div class="card border-0 col-3  d-flex flex-row justify-content-center">
+              <img class="text-center " style="width: 50%; height: 60%;margin-top: 10px;" src="HILTON.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="card col-lg-3 mt-5 w-25 h-75 p-4 d-none d-sm-none d-md-none d-lg-block ">
+          <div class="">
+            <h4 class="fs-6 fw-semibold">Let KAYAK do the searching</h4>
+
+            <div class="d-flex flex-column">
+              <div class="d-flex">
+                 <span class="fs-5 me-3">✔</span>
+                <p class="fs-6 my-1">Save on your next stay</p>
+              </div>
+             <div class="d-flex">
+              <span class="fs-5 me-3">✔</span>
+              <p class="fs-6 my-1">Search and compare hundreds of travel sites at once for hotelsin Zurich</p>
+             </div>
+             <div class="d-flex">
+              <span class="fs-5 me-3">✔</span>
+              <p class="fs-6 my-1"> We’re completely free to use – no hidden charges or fees</p>
+             </div>
+              <div class="d-flex">
+                <span class="fs-5 me-3">✔</span>
+              <p class="fs-6 my-1">Filter by free cancellation, free breakfast and more</p>
+              </div>
+              
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- Best Zurich hotels -->
+  <section class="container">
+    <div class=" mb-4 p-lg-5">
+      <div class="row">
+        <div>
+          <h4 class="fs-3 mt-5 fw-bolder">Best Zurich hotels</h4>
+        </div>
+
+
+        <div class="d-none d-sm-none d-md-none d-lg-block">
+          <div class="row ">
+            <div class="card border-0  col-3">
+              <div class="card border-0 my-4">
+                <h5 class="fs-5 fw-bold">Search By Stars</h5>
+                <div class=" d-flex flex-column justify-content-between p-3">
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">2+ Star</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">3+ Star</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">4+ Star</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">5+ Star</a>
+                </div>
+              </div>
+              <hr class="bg-black">
+              <div class="card border-0 my-4">
+                <h5 class="fs-5 fw-bold">Search By Review Score</h5>
+                <div class=" d-flex flex-column justify-content-between p-3">
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">6+ Okay</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">7+ Good</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">8+ Great</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">9+ Excellent</a>
+                </div>
+              </div>
+              <hr class="bg-black">
+              <div class="card border-0 my-4">
+                <h5 class="fs-5 fw-bold">Search By Price</h5>
+                <div class=" d-flex flex-column justify-content-between p-3">
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">₹ 6899 - ₹
+                    19,533</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">₹ 19533 - ₹
+                    32,167</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">₹ 32,167 - ₹
+                    44,801</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">₹ 44,801 - ₹
+                    57,435</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">₹ 57,435...
+                    Above</a>
+                </div>
+              </div>
+              <hr class="bg-black">
+              <div class="card border-0 my-4">
+                <h5 class="fs-5 fw-bold">Search By Freebies</h5>
+                <div class=" d-flex flex-column justify-content-between p-3">
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">Free
+                    Cancellation</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">Free Food</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">Free Parking</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">Free Wifi</a>
+                  <a class="fs-6 fw-normal fw-bold text-decoration-none" style="color: rgb(9, 122, 122)" href="">Free Car</a>
+                </div>
+              </div>
+            </div>
+            <div class="card border-0 col-9">
+              <h5 class="fs-4 my-4 fw-bolder">Most Recommended Zurich Hotel</h5>
+              <div class="f-flex flex-column justify-content-center">
+                <div class=" card border-0 shadow mb-4 col-12">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="img-fluid rounded-start h-100 w-100" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body ">
+                        <div class="row">
+                          <div class=" card border-0 col-8">
+                            <h5 class="card-title  fs-4 fw-bold">Züri by Fassbind</h5>
+                            <div class="card  bg-transparent border-0" style="width: 75%;">
+                              <div class="d-flex flex-row justify-content-between my-1">
+                                <p class="justify-content-between">
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                </p>
+                                <p>8.1 Very Good</p>
+                              </div>
+                            </div>
+    
+                            <div class="d-flex flex-row ">
+                              <p>Industriequartier</p>
+                              <div class="d-flex flex-row mx-3" style="color: green;">
+                                <p class="mx-2">Free Wi-Fi</p>
+                                <p class="mx-2">Pet-friendly</p>
+                              </div>
+                            </div>
+    
+                            <hr class="bg-black">
+                            <div class=" d-flex flex-row justify-content-between w-75 overflow-hidden">
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                            </div>
+                          </div>
+                          <div class=" card border-0 border-start col-4">
+                            <div class="h-75  d-flex flex-column justify-content-end">
+                              <h3>₹ 14,079</h3>
+                              <p>AGODA.com</p>
+                            </div>
+                            <div class=" d-flex flex-column justify-content-end ">
+                              <button class="btn " style="background-color: rgba(238,68,24,255); color:white">View Deal</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class=" card border-0 shadow mb-4">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="e7d0645516433b50.jpg" class="img-fluid rounded-start h-100 w-100" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body ">
+                        <div class="row">
+                          <div class=" card border-0 col-8">
+                            <h5 class="card-title  fs-4 fw-bold">Züri by Fassbind</h5>
+                            <div class="card  bg-transparent border-0" style="width: 75%;">
+                              <div class="d-flex flex-row justify-content-between my-1">
+                                <p class="justify-content-between">
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                </p>
+                                <p>8.1 Very Good</p>
+                              </div>
+                            </div>
+    
+                            <div class="d-flex flex-row ">
+                              <p>Industriequartier</p>
+                              <div class="d-flex flex-row mx-3" style="color: green;">
+                                <p class="mx-2">Free Wi-Fi</p>
+                                <p class="mx-2">Pet-friendly</p>
+                              </div>
+                            </div>
+    
+                            <hr class="bg-black">
+                            <div class=" d-flex flex-row justify-content-between w-75 overflow-hidden">
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                            </div>
+                          </div>
+                          <div class=" card border-0 border-start col-4">
+                            <div class="h-75  d-flex flex-column justify-content-end">
+                              <h3>₹ 14,079</h3>
+                              <p>AGODA.com</p>
+                            </div>
+                            <div class=" d-flex flex-column justify-content-end ">
+                              <button class="btn " style="background-color: rgba(238,68,24,255); color:white">View Deal</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class=" card border-0 shadow mb-4">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="ice-48731-63165971_3XL-316338.jpg" class="img-fluid rounded-start h-100 w-100" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body ">
+                        <div class="row">
+                          <div class=" card border-0 col-8">
+                            <h5 class="card-title  fs-4 fw-bold">Züri by Fassbind</h5>
+                            <div class="card  bg-transparent border-0" style="width: 75%;">
+                              <div class="d-flex flex-row justify-content-between my-1">
+                                <p class="justify-content-between">
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                </p>
+                                <p>8.1 Very Good</p>
+                              </div>
+                            </div>
+    
+                            <div class="d-flex flex-row ">
+                              <p>Industriequartier</p>
+                              <div class="d-flex flex-row mx-3" style="color: green;">
+                                <p class="mx-2">Free Wi-Fi</p>
+                                <p class="mx-2">Pet-friendly</p>
+                              </div>
+                            </div>
+    
+                            <hr class="bg-black">
+                            <div class=" d-flex flex-row justify-content-between w-75 overflow-hidden">
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                            </div>
+                          </div>
+                          <div class=" card border-0 border-start col-4">
+                            <div class="h-75  d-flex flex-column justify-content-end">
+                              <h3>₹ 14,079</h3>
+                              <p>AGODA.com</p>
+                            </div>
+                            <div class=" d-flex flex-column justify-content-end ">
+                              <button class="btn" style="background-color: rgba(238,68,24,255); color:white">View Deal</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class=" card border-0 shadow mb-4">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="leonardo-1119623-Greulich_Bar_S-745256.jpg" class="img-fluid rounded-start h-100 w-100"
+                        alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body ">
+                        <div class="row">
+                          <div class=" card border-0 col-8">
+                            <h5 class="card-title  fs-4 fw-bold">Züri by Fassbind</h5>
+                            <div class="card  bg-transparent border-0" style="width: 75%;">
+                              <div class="d-flex flex-row justify-content-between my-1">
+                                <p class="justify-content-between">
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                  <ion-icon name="star"></ion-icon>
+                                </p>
+                                <p>8.1 Very Good</p>
+                              </div>
+                            </div>
+    
+                            <div class="d-flex flex-row ">
+                              <p>Industriequartier</p>
+                              <div class="d-flex flex-row mx-3" style="color: green;">
+                                <p class="mx-2">Free Wi-Fi</p>
+                                <p class="mx-2">Pet-friendly</p>
+                              </div>
+                            </div>
+    
+                            <hr class="bg-black">
+                            <div class=" d-flex flex-row justify-content-between overflow-hidden w-75">
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+                              <div class="mx-2">
+                                <h6 style="font-size: 10px; font-weight: 700;">Booking.com</h6>
+                                <p style="font-size: 10px; font-weight: 700;">20,000 Rs</p>
+                              </div>
+    
+                            </div>
+                          </div>
+                          <div class=" card border-0 border-start col-4">
+                            <div class="h-75  d-flex flex-column justify-content-end">
+                              <h3>₹ 14,079</h3>
+                              <p>AGODA.com</p>
+                            </div>
+                            <div class=" d-flex flex-column justify-content-end ">
+                              <button class="btn" style="background-color: rgba(238,68,24,255); color:white">View Deal</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="bg-black border-1">
+              <div class="d-flex flex-row justify-content-between">
+                <h5 class="fs-4 fw-bold">Zurich hotels near Bahnhofstrasse</h5>
+                <h5 class=" fs-4 fw-bold">Show All</h5>
+              </div>
+              <div class="">
+                <!-- Slider -->
+                <ul class="slider">
+                  <!-- Profile Card -->
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <hr class="bg-black border-1">
+              <div class="d-flex flex-row justify-content-between">
+                <h5 class="fs-4 fw-bold">Top Zurich hotels with parking</h5>
+                <h5 class=" fs-4 fw-bold">Show All</h5>
+              </div>
+              <div class="">
+                <!-- Slider -->
+                <ul class="slider1">
+                  <!-- Profile Card -->
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="profile-card1 text-decoration-none list-unstyled">
+                    <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                      <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                      <div class="card-body ">
+                        <p class="card-title">Züri by Fassbind </p>
+                        <div class="d-flex flex-row justify-content-between m-0 p-0">
+                          <div>
+                            <p>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                              <ion-icon name="star"></ion-icon>
+                            </p>
+                          </div>
+                          <div>
+                            <p>8.1 Very Good</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="my-2">
+                            <p>Industriequartier</p>
+                          </div>
+                          <div>
+                            <p class="fs-3 fw-bold">₹ 9,908+</p>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                          <div class="">
+                            <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                          </div>
+                          <div>
+                            <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                          </div>
+                        </div>
+                        <div class="card border-0 w-100">
+                          <div class="d-flex flex-row justify-content-end">
+                            <div>
+                              <h6 class="fs-6">call</h6>
+                              <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                            </div>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+          
+        </div>
+        <div class="d-block d-sm-block d-md-block d-lg-none">
+        <div class="container ">
+          <!-- Slider -->
+          <h5 class="fs-4 my-4 fw-bolder">Most Recommended Zurich Hotel</h5>
+          <ul class="slider">
+            
+            <!-- Profile Card -->
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <hr class="bg-black border-1 ">
+        <div class="d-flex flex-row justify-content-between">
+          <h5 class="fs-4 fw-bold">Zurich hotels near Bahnhofstrasse</h5>
+          <h5 class=" fs-4 fw-bold">Show All</h5>
+        </div>
+        <div class="">
+          <!-- Slider -->
+          <ul class="slider">
+            <!-- Profile Card -->
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <hr class="bg-black border-1">
+        <div class="d-flex flex-row justify-content-between">
+          <h5 class="fs-4 fw-bold">Top Zurich hotels with parking</h5>
+          <h5 class=" fs-4 fw-bold">Show All</h5>
+        </div>
+        <div class="">
+          <!-- Slider -->
+          <ul class="slider1">
+            <!-- Profile Card -->
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="profile-card1 text-decoration-none list-unstyled">
+              <div class="card  p-0 m-0 mx-2  my-2 " style="width: 18rem;">
+                <img src="expediav2-8652-b288f7-070472 (1).jpg" class="card-img-top  w-100" alt="...">
+                <div class="card-body ">
+                  <p class="card-title">Züri by Fassbind </p>
+                  <div class="d-flex flex-row justify-content-between m-0 p-0">
+                    <div>
+                      <p>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                      </p>
+                    </div>
+                    <div>
+                      <p>8.1 Very Good</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="my-2">
+                      <p>Industriequartier</p>
+                    </div>
+                    <div>
+                      <p class="fs-3 fw-bold">₹ 9,908+</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <div class="">
+                      <p style="color: green;"> <ion-icon name="wifi"></ion-icon> Free Wifi</p>
+                    </div>
+                    <div>
+                      <p style="color: green;"> <ion-icon name="people"></ion-icon>Pet Friendly</p>
+                    </div>
+                  </div>
+                  <div class="card border-0 w-100">
+                    <div class="d-flex flex-row justify-content-end">
+                      <div>
+                        <h6 class="fs-6">call</h6>
+                        <h6 style="color:rgb(97, 157, 206)">+91 44 448 18 18</h6>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+  <!-- Good To Know -->
+  <div class="container p-lg-5 p-4">
+    <div class="row">
+      <h1 class="fs-3 mb-5 fw-bolder">Good To Know</h1>
+      <div class="container">
+        <div class="row gap-1  ">
+          <div class="card p-3 col-12 col-sm-6 col-md-6 col-lg-3" style="width:18rem;">
+            <h6 style="font-size: 15px; color: rgb(11, 107, 107);">low Season</h6>
+            <h4 class="my-3 fw-bolder">February</h4>
+            <p>Cheapest month to stay with an average <span class="fs-6 fw-bolder">67%</span> drop in price.</p>
+          </div>
+          <div class="card p-3 col-12 col-sm-6 col-md-6 col-lg-3" style="width:18rem;">
+            <h6 style="font-size: 15px; color: rgb(11, 107, 107);">High Season</h6>
+            <h4 class="my-3 fw-bolder">July</h4>
+            <p>Most expensive month to stay with an average <span class="fs-6 fw-bolder">25%</span>  rise in price.</p>
+          </div>
+          <div class="card p-3 col-12 col-sm-6 col-md-6 col-lg-3" style="width:18rem;">
+            <h6 style="font-size: 15px; color: rgb(11, 107, 107);">Average Price(weeknights)</h6>
+            <h4 class="my-3 fw-bold">₹ 25,263</h4>
+            <p>Average <span class="fs-6 fw-bolder">Sun - Thu</span>  price over the last 2 weeks.</p>
+          </div>
+          <div class="card p-3 col-12 col-sm-6 col-md-6 col-lg-3" style="width:18rem;">
+            <h6 style="font-size: 15px; color: rgb(11, 107, 107);">Average Price(weekend nights)</h6>
+            <h4 class="my-3 fw-bolder">₹ 21,643</h4>
+            <p>Average <span class="fs-6 fw-bolder">Fri & Sat</span>  price over the last 2 weeks.</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  <!-- When to book a hotel in Zurich -->
+  <div class="container p-lg-5 ">
+    <div class="row">
+      <h6 class="fs-3 mb-2 fw-bolder">When to book a hotel in Zurich</h6>
+      <h5 class="fs-6  fw-lighter">Price per night / 3-star hotel. Prices are not fixed and may vary with time.</h5>
+      <div class="row ">
+        <div class="card border-0 col-12 col-sm-12 col-md-6 col-lg-6 p-2 ">
+          <canvas id="myChart" style="width:100%;"></canvas>
+        </div>
+        <div class=" card border-0 col-12 col-sm-12 col-md-6 col-lg-6 p-2" >
+          <canvas id="myChart1" style="width:100%;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Top tips for finding Zurich hotel deals -->
+  <div class="container p-lg-5">
+    <h1 class="fs-3 mb-5 fw-bolder">Top tips for finding Zurich hotel deals</h1>
+
+    <div class="card border-0 col-12 col-sm-12 col-md-12 col-lg-9">
+      <div>
+        <ul class="list-unstyled">
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+              <p>If you’re looking for a cheap hotel in Zurich, you should consider visiting during the low season. You'll find cheaper accommodations in Zurich in February and January.</p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+              <p>If you’re looking for a cheap hotel in Zurich, you should consider visiting during the low season. You'll find cheaper accommodations in Zurich in February and January.</p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+        
+              <p>Hotel room prices vary depending on many factors but you’ll most likely find the best hotel deals in Zurich if you stay on a Friday. The opposite is true for, Tuesday, which is usually the most expensive day.
+            </p>
+          </li>
+          <li class="d-flex flex-row  my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+          
+              <p>Book at least 48 days before your stay begins to get the best price for your Zurich accommodation.
+            </p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+        
+              <p>The cheapest 3-star hotel room in Zurich found on KAYAK in the last 2 weeks was ₹ 6,635, while the most expensive was ₹ 24,307.
+            </p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+          
+              <p>Lake Zürich sits in the southeast of the city. Surrounded by mountains and smaller towns, you will find the best time of year to holiday near the lake to be August, when the water temperature is pleasant for swimming and sailing. On the water’s edge, you will find Steigenberger Hotel Bellerive au Lac, which has modern rooms and views over the water.</p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+              <p>In the city centre, you will find a number of rentals that are suitable as term-time accommodation for students. To stay in the area, look for hotels in the Altstadt, near the main train station. 25hours Hotel Zurich Langstrasse has a trendy feel, with private balconies and an on-site gym. Hotel Restaurant Helvetia sits on the edge of the river, with modern rooms and close proximity to local transport links.
+            </p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+              <p>In the city centre, you will find a number of rentals that are suitable as term-time accommodation for students. To stay in the area, look for hotels in the Altstadt, near the main train station. 25hours Hotel Zurich Langstrasse has a trendy feel, with private balconies and an on-site gym. Hotel Restaurant Helvetia sits on the edge of the river, with modern rooms and close proximity to local transport links.
+            </p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+              <p>District 1, also known as the Altstadt or Old Town, is filled with museums and areas of historical interest, such as St. Peter, an old church that sits in the heart of the old town. Storchen Zürich sits on the edge of Limmat river, with stunning views of Grossmünster church.
+            </p>
+          </li>
+          <li class="d-flex flex-row justify-content-between my-3">
+            <img class="mx-3 mt-2" style="height: 20px; width: 20px;" src="Eo_circle_green_checkmark.svg (1).webp" alt="">          
+              <p>To stay near the train station, look into District 4 and District 5 of the city centre, where you will find a number of excellently rated hotels and rentals on offer with good links in and out of the city by both train and bus. Renaissance Zurich Tower Hotel offers a 5-star stay, or on a cheaper budget, try Iq130 Apartment Hotel.
+            </p>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+<!-- map -->
+  <div class="container p-lg-5">
+    <div class="row">
+      <h5 class="fs-4 fw-bolder">Where to stay in Zurich?</h5>
+      <p>Our map will help you find the perfect place to stay in Zurich by showing you the exact location of each hotel.</p>
+      <div class="col-12 mb-5">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d43218.15565618007!2d8.483389611493543!3d47.38980408707465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1700628289580!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+  </div>
+  </div>
+  <!-- FAQs when booking a hotel in Zurich -->
+  <div class="container p-lg-5">
+    <div class="row">
+      <h1 class="fs-3 mb-5 fw-bolder">FAQs when booking a hotel in Zurich</h1>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+        <div class="card border-0">
+          <hr class="bg-black w-100">
+          <p class="d-inline-flex ">
+            <a class="btn btn-light w-100 m-0 text-start" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Are there good hotels near Zürich airport?
+            </a>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card border-0 card-body mb-3">
+              At the heart of Zürich airport, you will find Radisson Blu Hotel, which is rated as one of the best airport hotels on KAYAK. Nearby you will find Mövenpick Hotel, which comes with a free airport shuttle, and in Kloten town, you will find Hotel Welcome Inn, which also offers a free airport shuttle and is excellently rated
+            </div>
+          </div>
+          <hr class="bg-black w-100">
+          <p class="d-inline-flex ">
+            <a class="btn btn-light w-100  text-start" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+              What hotels in Zürich have especially good spa services?
+            </a>
+          </p>
+          <div class="collapse" id="collapseExample1">
+            <div class="card border-0 card-body mb-3">
+              In the city centre, you will find Marktgasse Hotel, which sits on the edge of the Limmet river in a classic building with a relaxing roof terrace.
+            </div>
+          </div>
+          <hr class="bg-black w-100">
+          <p class="d-inline-flex ">
+            <a class="btn btn-light w-100 m-0 text-start" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Are there hotels in Zürich where I can take my dogs/pets?
+            </a>
+          </p>
+          <div class="collapse" id="collapseExample2">
+            <div class="card border-0 card-body mb-3">
+              Yes. There is a large number of hotels in Zürich that cater for pets, so if you’re travelling with your animals, then you can look to stay in the Old Town or in Oerlikon, just north of the city centre. Design Hotel Plattenhof is close to Universitätsspital Park, which is good for walking dogs.
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <!-- Popular in Zurich -->
+  <div class="container p-lg-5">
+    <div class="row mt-5">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <h3 class="fs-4 mb-3 fw-bolder">Popular in Zurich</h3>
+        <div class="my-4">
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122, 122);">Zurich boutique hotels</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122, 122);">Zurich 5-star hotels</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122, 122);">Zurich budget hotels</h6>
+        </div>
+        
+
+        <hr class="bg-black w-100">
+
+        <h3 class="fs-4 mb-3 fw-bolder">Accommodations in Zurich</h3>
+        <div class="my-4">
+           <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122, 122);">Hostel</h6>
+            <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Holiday Rentals in Zurich</h6>
+        </div>
+       
+        <hr class="bg-black w-100">
+
+        <h3 class="fs-4 mb-3 fw-bolder">Airports in Zurich</h3>
+        <div>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);"> Hotels near Zurich Airport</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);"> Hotels near Basel EuroAirport Swiss</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);"> Hotels near Mulhouse EuroAirport</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);"> Hotels near Belp Airport</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);"> Hotels near Lugano Airport</h6>
+        </div>
+        <hr class="bg-black w-100">
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <h3 class="fs-4 mb-3 fw-bolder">Landmarks in Zurich</h3>
+        <div class="my-4">
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near Zurich Central Station, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near Bahnhofstrasse, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near ETH Zürich, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near Niederdorf, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near Opernhaus Zürich, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near Paradeplatz, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels near Fraumünster, Zurich</h6>
+        </div>
+        <hr class="bg-black w-100">
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <h3 class="fs-4 mb-3 fw-bolder">Neighbourhoods in Zurich</h3>
+        <div class="my-4">
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Altstadt, Zurich </h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Altstetten, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Seefeld, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Aussersihl, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Oberstrass, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Fluntern, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Enge, Zurich</h6>
+          <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">Hotels in Alt-Wiedikon, Zurich</h6>
+        </div>
+        <hr class="bg-black w-100">
+      </div>
+
+      <div class="my-5">
+        <h6 class="fs-6 fw-bolder" style="color: rgb(9, 122,122);">All hotels in Zurich </h6>
+      </div>
+
+    </div>
+
+  </div>
+<!-- footer -->
+  <footer class="bg-black">
+    <div class="container p-lg-5">
+      <div class="row">
+        <div class="d-flex flex-row">
+          <h6 class="fs-6 my-3 fw-bolder" style="color: rgb(255, 255, 255);">Top hotel destinations </h6>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+          <div class="d-flex flex-column ">
+              <a class="text-white text-decoration-none" style="font-size: 15px;" href="">Nairobi hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Dalhousie hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Bhubaneswar hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">New Delhi hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Matheran hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Mumbai hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Haridwar hotels</a>
+              <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Baga hotels</a>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+          <div class="d-flex flex-column">
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Freiburg im Breisgau hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Victoria Falls hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Vagator hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Varanasi hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Panaji hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Gangtok hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Singapore hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Dubai hotels</a>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+          <div class="d-flex flex-column">
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Varkala hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Manila hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Hyderabad hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Bengaluru hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Chennai hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Kochi hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Guwahati hotels</a>
+            <a  class="text-white text-decoration-none" style="font-size: 15px;" href="">Ooty hotels</a>
+
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-3">
+          <div>
+            <h3 class="fs-6 text-white fw-bolder">Site</h3>
+            <select name="countries" id="countries" style="width:100%;">
+              <option value='in' data-imagecss="flag in" data-title="India">India</option>
+              <option value='ae' data-imagecss="flag ae" data-title="United Arab Emirates">United Arab Emirates</option>
+              <option value='af'  data-imagecss="flag af" data-title="Afghanistan">Afghanistan</option>
+              <option value='ag'  data-imagecss="flag ag" data-title="Antigua and Barbuda">Antigua and Barbuda</option>
+              <option value='ai'  data-imagecss="flag ai" data-title="Anguilla">Anguilla</option>
+              <option value='al'  data-imagecss="flag al" data-title="Albania">Albania</option>
+              <option value='am' data-imagecss="flag am" data-title="Armenia">Armenia</option>
+              <option value='an'  data-imagecss="flag an" data-title="Netherlands Antilles">Netherlands Antilles</option>
+        </select>
+          </div>
+        </div>
+
+        <div class="text-light-emphasis my-3">
+          <div class="d-flex flex-row justify-content-center ">
+              <h6 class="mx-3">Privacy</h6>
+              <h6 class="mx-3">Terms and Conditions</h6>
+              <h6 class="mx-3">@2023 KAYAK</h6>
+          </div>
+        </div>
+        <div class="text-light-emphasis my-3 col-12">
+          <div class="d-flex flex-row justify-content-center overflow-hidden ">
+              <button class="btn btn-dark  p-2 mx-1"><ion-icon class="fs-3 mt-1 " name="logo-facebook"></ion-icon></button>
+              <button class="btn btn-dark p-2 mx-1"><ion-icon class="fs-3 mt-1 text-white "name="logo-twitter"></ion-icon></button>
+              <button class="btn btn-dark  p-2 mx-1"><ion-icon class="fs-3 mt-1  "name="logo-youtube"></ion-icon></button>
+              <button class="btn btn-dark  p-2 mx-1" ><ion-icon class="fs-3 mt-1  "name="logo-instagram"></ion-icon></button>
+              <button class="btn btn-dark  p-2 mx-1"><ion-icon class="fs-3 mt-1  "name="logo-google-playstore"></ion-icon></button>
+              <button class="btn btn-dark  p-2 mx-1"><ion-icon class="fs-3 mt-1  "name="logo-apple-appstore"></ion-icon></button>
+          </div>
+        </div>
+
+
+        <p class="text-white text-center">KAYAK is part of Booking Holdings Inc., the world leader in online travel & related services.</p>
+        <div class="container">
+          <div class="card bg-black w-100 text-center  ">
+            <div class="d-flex flex-wrap justify-content-between gap-2">
+              <div class="card border-0 col-2">
+                  <img class="h-100 w-100"   src="AGODA.png" alt="">
+              </div>
+              <div class="card border-0 col-2">
+                <img class="h-100 w-100"  style="height: 30px;" src="booking1.png" alt="">
+              </div>
+              <div class="card border-0 col-2">
+                <img class="h-100 w-100"  src="HILTON.png" alt="">
+              </div>
+              <div class="card border-0 col-2">
+                <img  class="h-100 w-100"  src="HOTELSDOTCOM.png" alt="">
+              </div>
+              <div class="card border-0 col-2">
+                  <img  class="h-100 w-100" src="PRICELINE.png" alt="">
+              </div>
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  <script src="script.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Charting library -->
+    
+
+</body>
+
+</html>
